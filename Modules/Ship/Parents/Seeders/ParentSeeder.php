@@ -1,6 +1,6 @@
 <?php
 
-namespace Seeders;
+namespace Modules\Ship\Parents\Seeders;
 
 use Illuminate\Database\Seeder as LaravelSeeder;
 

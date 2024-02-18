@@ -1,8 +1,8 @@
 <?php
 
-namespace Controllers;
+namespace Modules\Ship\Parents\Controllers;
 
-use Traits\ResponseTrait;
+use Modules\Ship\Traits\ResponseTrait;
 
 abstract class ParentApiController extends ParentController
 {

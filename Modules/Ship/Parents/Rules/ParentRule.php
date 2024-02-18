@@ -1,6 +1,6 @@
 <?php
 
-namespace Rules;
+namespace Modules\Ship\Parents\Rules;
 
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;

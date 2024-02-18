@@ -1,6 +1,6 @@
 <?php
 
-namespace Exceptions;
+namespace Modules\Ship\Exceptions;
 
 use Symfony\Component\HttpFoundation\Response;
 

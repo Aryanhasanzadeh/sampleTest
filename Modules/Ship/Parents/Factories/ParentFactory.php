@@ -1,6 +1,6 @@
 <?php
 
-namespace Factories;
+namespace Modules\Ship\Parents\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory as LaravelFactory;
 

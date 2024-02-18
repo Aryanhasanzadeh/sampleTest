@@ -1,6 +1,6 @@
 <?php
 
-namespace Traits;
+namespace Modules\Ship\Traits;
 
 use Mockery;
 use Mockery\CompositeExpectation;

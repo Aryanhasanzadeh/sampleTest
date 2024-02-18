@@ -1,6 +1,6 @@
 <?php
 
-namespace Exceptions;
+namespace Modules\Ship\Parents\Exceptions;
 
 use Exception as BaseException;
 use Illuminate\Support\Facades\Config;

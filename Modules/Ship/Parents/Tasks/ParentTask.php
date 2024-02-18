@@ -2,7 +2,7 @@
 
 namespace Modules\Ship\Parents\Tasks;
 
-use Traits\MockHelpersTrait;
+use Modules\Ship\Traits\MockHelpersTrait;
 
 abstract class ParentTask
 {

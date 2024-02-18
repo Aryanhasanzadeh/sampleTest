@@ -1,7 +1,9 @@
 <?php
 
+namespace Modules\Ship\Parents\Actions;
+
 use Illuminate\Support\Facades\DB;
-use Traits\MockHelpersTrait;
+use Modules\Ship\Traits\MockHelpersTrait;
 
 abstract class ParentAction
 {

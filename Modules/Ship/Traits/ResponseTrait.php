@@ -1,6 +1,6 @@
 <?php
 
-namespace Traits;
+namespace Modules\Ship\Traits;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
