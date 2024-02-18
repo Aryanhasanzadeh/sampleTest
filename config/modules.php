@@ -173,10 +173,10 @@ return [
     */
 
     'composer' => [
-        'vendor' => 'nwidart',
+        'vendor' => 'test',
         'author' => [
-            'name' => 'Nicolas Widart',
-            'email' => 'n.widart@gmail.com',
+            'name' => 'Aryan Hasanzadeh',
+            'email' => 'aryanhasanzadeh75@gmail.com',
         ],
         'composer-output' => false,
     ],
