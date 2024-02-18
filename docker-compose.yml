@@ -1,0 +1,106 @@
+version: "3"
+
+services:
+    #local FTP server
+    ftp:
+        image: garethflowers/ftp-server
+        environment:
+            - FTP_USER=${FTP_USER}
+            - FTP_PASS=${FTP_PASSWORD}
+        restart: always
+        ports:
+            - '${FORWARD_FTP_PORT:-20-21}:${FORWARD_FTP_PORT:-20-21}/tcp'
+            - '${FORWARD_FTP_PASSIVE_PORT:-40000-40009}:${FORWARD_FTP_PASSIVE_PORT:-40000-40009}/tcp'   # passive mode
+        volumes:
+            - ./storage/ftp/public:/home/www/public
+            - ./storage/ftp/private:/home/www/private
+        networks:
+            - app_network
+
+    #Nginx Service
+    webserver:
+        build:
+            context: ./docker/nginx
+            dockerfile: Dockerfile
+        image: nginx:1.23.3-alpine
+        restart: always
+        tty: true
+        ports:
+            - '${APP_PORT:-82}:80'
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx/conf.d/dev/:/etc/nginx/conf.d/
+        networks:
+            - app_network
+
+    #php Service
+    app:
+        build:
+            context: ./docker/app
+            dockerfile: Dockerfile
+        container_name: tes-app
+        restart: always
+        tty: true
+        volumes:
+            - ./:/var/www
+            - ./docker/app/local.ini:/usr/local/etc/php/conf.d/local.ini
+        depends_on:
+            - ftp
+        networks:
+            - app_network
+
+    #Supervisor Service
+    supervisor:
+        extends:
+            service: app
+        container_name: tes-supervisor
+        image: tesmino-api-app
+        user: root
+        command: 'supervisord -c /etc/supervisor/conf.d/supervisord.conf'
+        depends_on:
+            - app
+        networks:
+            - app_network
+
+    #MySQL Service
+    db:
+        image: mariadb:10.5.8
+        restart: always
+        tty: true
+        ports:
+            - '${FORWARD_DB_PORT:-3309}:3306'
+        environment:
+            MYSQL_DATABASE: '${DB_DATABASE}'
+            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_USER: '${DB_USERNAME}'
+            MYSQL_PASSWORD: '${DB_PASSWORD}'
+        volumes:
+            - ./docker/db/data:/var/lib/mysql/
+            - ./docker/db/my.cnf:/etc/mysql/my.cnf
+        networks:
+            - app_network
+
+    #PHPMYADMIN Service
+    phpmyadmin:
+        image: phpmyadmin
+        restart: always
+        ports:
+            - '${FORWARD_PHPMYADMIN_PORT:-9494}:80'
+        environment:
+            MYSQL_USERNAME: '${DB_USERNAME}'
+            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+            PMA_HOST: db
+            SERVICE_NAME: phpmyadmin
+        depends_on:
+            - db
+        networks:
+            - app_network
+
+#Docker Networks
+networks:
+    app_network:
+        driver: bridge
+#Volumes
+volumes:
+    dbdata:
+        driver: local
