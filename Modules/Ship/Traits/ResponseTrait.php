@@ -2,6 +2,7 @@
 
 namespace Modules\Ship\Traits;
 
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -20,5 +21,13 @@ trait ResponseTrait
     public function noContent($status = 204): JsonResponse
     {
         return new JsonResponse(null, $status);
+    }
+
+    public function emptyData(): JsonResponse
+    {
+        return response()->json([
+            'data' =>[],
+            'Server_time' => Carbon::now()
+        ]);
     }
 }
