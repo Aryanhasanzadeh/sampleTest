@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Modules\User\App\Http\Controllers\LoginController;
 use Modules\User\App\Http\Controllers\LoginOutController;
+use Modules\User\App\Http\Controllers\UserInfoController;
 
 /*
     |--------------------------------------------------------------------------
@@ -20,5 +21,8 @@ Route::prefix('v1')->prefix('auth')->name('api.auth.')->group(function () {
 
     Route::middleware('auth')->group(function () {
         Route::post('login-out', LoginOutController::class)->name('login');
+    });
+    Route::prefix('user')->group(function () {
+        Route::get('{user}', UserInfoController::class)->name('info');
     });
 });
