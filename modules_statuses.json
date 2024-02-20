@@ -1,4 +1,5 @@
 {
     "Ship": true,
-    "User": true
+    "User": true,
+    "Message": true
 }

@@ -1,0 +1,31 @@
+{
+    "name": "test/message",
+    "description": "",
+    "authors": [
+        {
+            "name": "Aryan Hasanzadeh",
+            "email": "aryanhasanzadeh75@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Message\\": "",
+            "Modules\\Message\\App\\": "app/",
+            "Modules\\Message\\Database\\Factories\\": "database/factories/",
+            "Modules\\Message\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Message\\Tests\\": "tests/"
+        }
+    }
+}

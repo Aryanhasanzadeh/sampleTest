@@ -46,6 +46,8 @@ services:
             - ./docker/app/local.ini:/usr/local/etc/php/conf.d/local.ini
         depends_on:
             - ftp
+            - db
+            - db2
         networks:
             - app_network
 
@@ -93,6 +95,39 @@ services:
             SERVICE_NAME: phpmyadmin
         depends_on:
             - db
+        networks:
+            - app_network
+
+    db2:
+        image: mariadb:10.5.8
+        restart: always
+        tty: true
+        ports:
+            - '${FORWARD_DB_second_PORT:-3311}:3306'
+        environment:
+            MYSQL_DATABASE: '${DB_second_DATABASE}'
+            MYSQL_ROOT_PASSWORD: '${DB_second_PASSWORD}'
+            MYSQL_USER: '${DB_second_USERNAME}'
+            MYSQL_PASSWORD: '${DB_second_PASSWORD}'
+        volumes:
+            - ./docker/secondDb/data:/var/lib/mysql/
+            - ./docker/secondDb/my.cnf:/etc/mysql/my_second.cnf
+        networks:
+            - app_network
+
+    #PHPMYADMIN Service
+    secondPhpmyadmin:
+        image: phpmyadmin
+        restart: always
+        ports:
+            - '${FORWARD_PHPMYADMIN_DB_second_PORT:-9595}:80'
+        environment:
+            MYSQL_USERNAME: '${DB_second_USERNAME}'
+            MYSQL_ROOT_PASSWORD: '${DB_second_PASSWORD}'
+            PMA_HOST: db2
+            SERVICE_NAME: phpmyadmin
+        depends_on:
+            - db2
         networks:
             - app_network
 
