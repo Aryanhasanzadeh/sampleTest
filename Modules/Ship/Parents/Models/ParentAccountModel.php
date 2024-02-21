@@ -11,9 +11,8 @@ use Modules\Ship\Traits\ModelHelpers;
 
 abstract class ParentAccountModel extends Authenticatable
 {
-    use HasFactory,
-        ModelHelpers,
+    use ModelHelpers,
         HasApiTokens,
-        HasFactory,
-        Notifiable;
+        Notifiable,
+        HasFactory;
 }

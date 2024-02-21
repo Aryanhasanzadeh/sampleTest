@@ -18,8 +18,13 @@ class FindUserByPhoneTask extends ParentTask
     public function run(LoginDto $data): User|null
     {
         try {
-            return User::where('phone', $data->phone)
-                ->first();
+            if (User::where('phone', $data->phone)
+                ->exists()){
+                return User::where('phone', $data->phone)
+                    ->first();
+            }
+
+            throw new Exception();
         } catch (Exception) {
             throw new NotFoundException();
         }

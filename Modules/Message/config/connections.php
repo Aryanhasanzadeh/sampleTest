@@ -2,7 +2,7 @@
 
 return [
     'Second_mysql' => [
-        'driver' => 'mysql',
+        'driver' => env('DB_second_CONNECTION','mysql'),
         'url' => env('DATABASE_URL'),
         'host' => env('DB_second_HOST', '127.0.0.1'),
         'port' => env('DB_second_PORT', '3307'),

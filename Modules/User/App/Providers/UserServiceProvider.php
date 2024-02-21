@@ -4,6 +4,7 @@ namespace Modules\User\App\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class UserServiceProvider extends ServiceProvider
 {
@@ -21,6 +22,7 @@ class UserServiceProvider extends ServiceProvider
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
+        $this->loadFactories();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'Database/migrations'));
     }
 
@@ -30,6 +32,18 @@ class UserServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->register(RouteServiceProvider::class);
+    }
+
+    /**
+     * Register Factories.
+     */
+    private function loadFactories(): void
+    {
+        Factory::guessFactoryNamesUsing(function (string $modelName) {
+            $module = str($modelName)->after('\\')->before('\\')->toString();
+
+            return 'Modules\\'.$module.'\\Database\\Factories\\'.class_basename($modelName).'Factory';
+        });
     }
 
     /**
